@@ -75,13 +75,13 @@ set $ARM = 0
 set $COLOREDPROMPT = 1
 # color the first line of the disassembly - default is green, if you want to change it search for
 # SETCOLOR1STLINE and modify it :-)
-set $SETCOLOR1STLINE = 0
+set $SETCOLOR1STLINE = 1
 # set to 0 to remove display of objectivec messages (default is 1)
 set $SHOWOBJECTIVEC = 1
 # set to 0 to remove display of cpu registers (default is 1)
 set $SHOWCPUREGISTERS = 1
 # set to 1 to enable display of stack (default is 0)
-set $SHOWSTACK = 0
+set $SHOWSTACK = 1
 # set to 1 to enable display of data window (default is 0)
 set $SHOWDATAWIN = 0
 # set to 0 to disable colored display of changed registers
@@ -117,9 +117,9 @@ set width 0
 set $SHOW_CONTEXT = 1
 set $SHOW_NEST_INSN = 0
 
-set $CONTEXTSIZE_STACK = 6
-set $CONTEXTSIZE_DATA  = 8
-set $CONTEXTSIZE_CODE  = 8
+set $CONTEXTSIZE_STACK = 16
+set $CONTEXTSIZE_DATA  = 16
+set $CONTEXTSIZE_CODE  = 16
 
 # __________________end gdb options_________________
 #
@@ -139,10 +139,10 @@ set $WHITE = 7
 # CHANGME: If you want to modify the "theme" change the colors here
 #          or just create a ~/.gdbinit.local and set these variables there
 set $COLOR_REGNAME = $GREEN
-set $COLOR_REGVAL = $BLACK
+set $COLOR_REGVAL = $YELLOW
 set $COLOR_REGVAL_MODIFIED  = $RED
 set $COLOR_SEPARATOR = $BLUE
-set $COLOR_CPUFLAGS = $RED
+set $COLOR_CPUFLAGS = $CYAN
 
 # this is ugly but there's no else if available :-(
 define color
@@ -210,7 +210,8 @@ end
 # this way anyone can have their custom prompt - argp's idea :-)
 # can also be used to redefine anything else in particular the colors aka theming
 # just remap the color variables defined above
-source ~/.gdbinit.local
+shell if test -f ~/.gdbinit.local; then echo source ~/.gdbinit.local; fi > /tmp/F
+source /tmp/F
 
 # can't use the color functions because we are using the set command
 if $COLOREDPROMPT == 1
